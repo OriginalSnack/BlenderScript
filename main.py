@@ -1,27 +1,27 @@
 import bpy
-import os
+import math
 
-angle_x, angle_y, angle_z = 0, 0, 0
-# Set the path to the folder where images will be saved
-output_folder = "/Users/stanislavkravciv/Desktop/dataset/train"
-os.makedirs(output_folder, exist_ok=True)
+def screanshots(out_path, i):
+    bpy.context.scene.render.image_settings.file_format = 'JPEG'
 
-blender_file = "/Users/stanislavkravciv/blender_workspace/untitled.blend"
-
-bpy.ops.wm.open_mainfile(filepath=blender_file)
-
-bpy.context.scene.render.image_settings.file_format = 'JPEG'
-bpy.context.scene.render.filepath = output_folder + "/image_"
-
-num_screens = 10
-
-for i in range(num_screens):
-    bpy.context.scene.render.filepath = output_folder + "/image_{:04d}".format(i)
-
-    angle_x += 1
-    angle_y += 1
-    angle_z += 1
+    bpy.context.scene.render.filepath = output_path + "/image_{:04d}".format(i)
 
     bpy.ops.render.render(write_still=True)
 
-print(f"{num_screens} screens rendered and saved to {output_folder}")
+
+shahed = "W"
+camera = "Camera"
+
+amount_of_photos = 4
+
+output_path = "/Users/stanislavkravciv/Desktop/dataset/test"
+
+obj = bpy.data.objects.get(shahed)
+obj_camera = bpy.data.objects.get(camera)
+
+for i in range(amount_of_photos):
+    screanshots(output_path, i)
+    if obj is not None:
+        obj.rotation_euler[0] += 0.1
+        obj.rotation_euler[1] += 0.1
+        obj.rotation_euler[2] += 0.1
